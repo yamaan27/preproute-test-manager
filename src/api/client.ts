@@ -11,7 +11,12 @@ import type {
 } from "../types";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ?? "/api";
+  typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1" ||
+    window.location.hostname.startsWith("192."))
+    ? (import.meta.env.VITE_API_BASE_URL ?? "/api")
+    : "/api";
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
